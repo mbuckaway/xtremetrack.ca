@@ -233,7 +233,28 @@ jQuery(document).ready(function($) {
 		  navigationText : ['<i class="pe-4x pe-7s-angle-left pe-border"></i>','<i class="pe-4x  pe-7s-angle-right pe-border"></i>'],
 	  });
 	
-	// FUNFACTS
+	 //OWLCAROUSEL SPONSORS CAROUSEL
+     var owl = $("#sponsors-carousel3");
+ 
+     owl.owlCarousel({
+         
+         autoPlay: false,
+
+         itemsCustom : [
+           [0, 1],
+           [450, 1],
+           [600, 4],
+           [700, 4],
+           [1000, 4],
+           [1200, 4],
+           [1600, 4]
+         ],
+         pagination : false,
+         navigation : true,
+         navigationText : ['<i class="pe-4x pe-7s-angle-left pe-border"></i>','<i class="pe-4x  pe-7s-angle-right pe-border"></i>'],
+     });
+
+      // FUNFACTS
 	 $('.number').counterUp({
 		delay: 10,
 		time: 3000
