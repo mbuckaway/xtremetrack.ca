@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Edward Sitarski" />
+    <meta name="copyright" content="Edward Sitarski, 2011-2020" />
+    <meta name="generator" content="CrossMgr" />
+    <meta name="keywords" content="CrossMgr, Cycling, Race, Results" />
+    <title id="idTitle">Results</title>
+    <style type="text/css">
+      body {
+        font-family: Helvetica, sans-serif;
+        font-size: 24px;
+      }
+      .hidden {
+        display: none;
+      }
+      .btn {
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        border-radius: 4px;
+        border: 1px solid #d0d0d0;
+        display: inline-block;
+        cursor: pointer;
+        background-color: #7fe57f;
+        color: #333;
+        padding: 4px 8px;
+        text-decoration: none;
+        margin: 8px;
+        font-size: 120%;
+      }
+      li.highlight {
+        background-color: #ffff66;
+      }
+      ol {
+        counter-reset: li;
+        margin-left: 0;
+        padding-left: 0;
+      }
+      ol > li {
+        position: relative;
+        margin: 0 0 6px 2em;
+        padding: 4px 8px;
+        list-style: none;
+        border-top: 2px solid #666;
+      }
+      ol > li:before {
+        content: counter(li);
+        counter-increment: li;
+        position: absolute;
+        top: -2px;
+        left: -2em;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 2em;
+        margin-right: 8px;
+        padding: 4px;
+        border-top: 2px solid #666;
+        color: #fff;
+        background: #666;
+        font-weight: bold;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        text-align: center;
+      }
+      li ol,
+      li ul {
+        margin-top: 6px;
+      }
+      ol ol li:last-child {
+        margin-bottom: 0;
+      }
+      a {
+        white-space: nowrap;
+      }
+      .small-font {
+        font-size: 85%;
+      }
+      .racename {
+        font-size: 170%;
+        margin: 8px;
+        text-decoration: none;
+      }
+      @media print {
+        .noprint {
+          display: none;
+        }
+      }
+    </style>
+    <script>
+      function setIcons(icon, class_name) {
+        var elements = document.getElementsByClassName(class_name);
+        for (var i = 0; i < elements.length; ++i) {
+          elements[i].src = icon;
+        }
+      }
+      function onLoad() {
+        setIcons(
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAXCAYAAABqBU3hAAAABHNCSVQICAgIfAhkiAAAA6FJREFUSInFllFMW1UYx3/nUsoGK0VZKSGluJg6rcgQly6Z2Vw7WJa4mLkt6CIanTxIlpKoYYszmpixhyUYNUuImsjDMk1gyha2ZWaSGDRZMNh1jgWfAM3iMkYq0A5a6O09PhRuLNzL2odl/6cv3/2+c37n3O9854i+vu8kD1EWgPLyctxuV06Jsdg9Rkb+RAhBVZUbp7Msp/xI5F9GR8fSAEVFa3E61+c0QH5+nm7bbEU55yeTSQCUnLIegFYF0DSJqmrIB1glFiNnKHSDU6e+JvT7dVKpFI9tqOLQW6+xb/8eFEWYDnb79h2OfdCOqqZMY44cDVJT4zUHuHSpn5Z33kdVVeTi0qenhwleO0o4fIPj7cdMIcLXhrly5WfTyaWUvN3clOHLAJicjPDeux+iqirWAittbUEcjlK++Pwrxsf/pqvrW7Zu9fHingbDCSYnI0gpaWjw8+RTHt0/MXGXnu7zFBUV4vPVmQOcOXOWaDQGQFtbkMOHDwFQW1tNwL8XTdPo7PzGFGBn/XY+ThyhqekANts63d/R0YkQgi1bNlNYuDYjJ6MIBwauIoRACEFj417d7/E8Ts2magBCoT+YmYkZAlRWVtDS8mbG5Jqmca73IlJKdu3agVj293QAKSVjo+MAOMvLKC19RA8SAqqf3rhoC0YX47LR0NB1xsb+QgiBP7BtxXcdQNMkc3NxAEpKihHLUNfZinU7FpvNGqC7+zxCCLzejVRWVpgDCAEWS7okEol5/QQsKZlc0O38fMPTu0Kzs3F+vNyPlJId/m0rFpUBoCgKZU4HABN37uqtckm3bv0DpHfK5Vq5EiP1/zTA1NQ0ALt3BwxjMoqwrm4TAHNzcX4bDOn+eDzB4OAQAGXO9VkBSAndPecQQlBSYqe29pn7Axw8uA8pJYqicLz9UyKRKZLJFCdOfMbMdBQpJa80vrxqN1zSxMQkv/5yFYDAzu1YLMZdP+Nn+nzPsv/AS/zwfR83h0fY/FwAq9VKNBpDCIHb7SLY2nzfyQF6ey/qLbm+/gXTuAwsIQQdHZ/w+huvkpeXRyIxTyx2bxGujp6zXdjtxYYDLdeFC5fRNI2CAit+//OmcSvKec2aAk6e/IjW1mbC4ZuoagqPZwNe7xMoSva39+nTX7KwsIDVasVut2cPAOmdcLkqsq52Izkcj2YV99AfJBZIn+1kUs0pUVU13Y7H503vBzPF4+muK5ZexUZdajX9v1Mu75rZSgjBf5BmRGjAiH7nAAAAAElFTkSuQmCC",
+          "lapcounter"
+        );
+        setIcons(
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAABHNCSVQICAgIfAhkiAAABbJJREFUWIXtWFtsVFUUXfvcO9OZaacdClIENXzw+BINBESCGkX8EE0gxg8NEQIGowloYkwTUOogBklQioQoiAYLiR/9wmDQKBoIIi2RgIBIREItL23LDJ3HfZ69/SgtU+iUizI1Tbq+bs5d+9yV3L3X3ucAQxjCEAYU1NfiB83uGoJMHmgxhVDsL391evnP16+bfZEJMpmAJ0ovqzg0Ge/3ta4GWsh/xaAT3GdKXI+oCicuZOAE4SZiTpqIygBAIPvTubLZgeIqnJkk9O3NeIEEX8jAST5KdhBufbMt3c8E4uBxllvEA3ph0KXEkOBSY9AJLl50RIB01U9VzPlkwyFPB9mQRYe6S0cEEzcc8rYFiRPhmiC84oKlp9ihiOaLcJD9QAWVToQaEV4QKDAgiqaEFHtRakj/Xy4qmIggNwkuCah/L+43JehqsNj+6LJELFADcCznYnenY8GBSDT8VLA4dwYRdt2MF6jTpXUslZx0651OEfxXJlEqWJyVCWJag87WBp3gQClRKiyqWzva941xANB6bN991WMmIByrRChSUTQmkOBhFf6C+ibbD8IVgdFd6AIaVd9kLy7GPbXvi8f0lfbniEAdZ3/B5ZbjGDluCmrGTwWU8e8FQ/jjm9lNN6jXs0wA0dZi3HA0Dquz/dpnhOHbObDvQoWjtyZYEGQ6DQbWHrJtrTDCEcQSNSBlIJe6CNfO3sD17Bw8O4cyFQYALHxr3VQRHjbWyH2XTCa5qGAigjD3ePF/Qbb9HC79fgisfcSq7oAZjiHT0Qone6Pj5dKXcO74XnhWds7CFWvnMfQDAMXOuvG5AH4L1DjAerooM9ARSYSbFFG461kOZ9v+rD134sfXvHx6jgjDyaVBpMDag2vbsLJX4NgWCIRQWQSxeCW054BFFhBRmIQiRCCQroPI84FyOGVFj97CEalnSiKi7JmfdpYLyZTuGhDWEGh0drQjn7kCZt0zAniug3w2I/Fh1aioTFSRKnBdRXPnr1z7bEl92LUzI33IkyLoNTpmUx3Idaagtd9rXhERCGvqvNwu+VxGes0yRBFD1PqSCjZD0ZQo2gNCa/ea9j1kO9Ng7voRzLzJVTJee+5dmmWdiFyBiLIzGWJ9zUmZpZMVv11SwcowvR3vvNEIZSxi4CgAWJnOQrG7Zk68e9neHZ+e/r6x4TyFI+8R0AgAtpWD73kAAAGfAGT29mTt1oFozfL5qtf3QPgIgC4RV381AV8mk8me/76nYVMHhI6wcAoAfNeDiIB9+qrFzB8GkQQqukSFM7Pr3iCAOoHq6XQiVfXN1sPZtlb8cWh3jWi3l00yuLow9pG6OlOfaqkgMUwQQKqLS4TqsUhU7AXSfZrs+mbnm9tzGShw8xlcbj2JjtZf4VkZWNkM0m1/XXUHPgKlXiblHDMTCd/9O/8gkawgpR43DBPD7xyDUFkEwnJeSDaTx9tLOvxo30Pq/Cm0nTkC7XfZeFmsHOFIFHY+ByJ1P4tsgB9qcttyHgjTQTRZRCRaESfDDAEASNEYEixnw7inpIKJFJRhQuTagVsphcrq4RBhOFYeCjQNRNMK0kgi5XHEKqugDKNwswhIWvoUrNhfXux+9pagDIjW1Zr5RQJmdS+HyiJIjKiBnc/CymXh2haICGY4jGh5nKLlcZihUO+9WA6C/Y9u13xTFEuWbA5ZNZnFhnAdiEax8EkI2kA0g0RMrTWEGaCu+cUwTBBRGpCDInSvAKMBycPA0w2ran8o+QC/ZctL3pJ31++0LcQZfgsZOAgYtvLlIQKtM0OhsYV8ZjmsoNawwfsFRqXSPE8Av3JE5ABw+ybI/iFCS5dtDFdXd+hkMukDQF1dnXnWj31NSs26jrxNKVnxWbL2AgBauvTD8GkAuzcucwZOcBG88ObaRoJ6hgqui1h4ZcPq2tUocpfzvx5CRdE+9B5+XJCy0M/F0z+Qrrj6wdObpAAAAABJRU5ErkJggg==",
+          "results_current"
+        );
+        setIcons(
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAABHNCSVQICAgIfAhkiAAAA+RJREFUWIXtmEtonFUUx3/nTjKTmUySiTG0GMFVTGhLq7WWpvSBiC8wiy50o5CCUNBNdSFCd11l00pSFAQluAnUhTsxC0EsUSEJ1ha04mNjwKkOmpnJJM4j39zjYjLTJM6XuUmcTwL5r+7c75x7fwznce+FPe1pT4FK6k2+PVsaFfRo0DBrZax36eKJ9m82zrfUMxb0qMDTzcfyV1lCV+vNm6BBdqpdB1w3JDYqasKJZI6ii20iVsyISARA0S8zy5GnnPzixVOi8lkjOyfgZI7i5Sek4GI7NlvQ6lgQ6+6XL/nUgHXadSGxB9xs7Tpg/6QTAa3kT1es+P743ErZZUGr5dZq6qgyMD638qGLn6rd52LnD6y1ZMeIvKxqXdZD1mS6CPtU7YiTo6N8Q0L9PjRbuvnOvsAigjZwbopk81q8aUjIqrMWvAciiZhTAyjmi3ernc4qX7dFw8+7+ZVOivBJIzunTpcpx9KXD2+90xnBe+2wpN388jmXorXrytoecLPlFMPdcW9kbKbgudiqEqomuiL7x2YKrziRiOlvVNLAERi17zUqN7V91431YUQ+8LPtTv3IfX/8QDybJJZL4bVGWUr0ke7tp9DWuTVgxeV0uj313P2egW8/Yv+vs3Rk5oku/0Ukn6HcEiHf3sNSVx8d6fkLI0OUyTItdyg1BBYR1NpaLf6v1H/7Yx6Zfpfe327RWlpe9y3kFYlnk8SzSdQyrIaD0sOEPsc1marceJwaB7Z8Qk2L0xVJ1c4YkXBlrDcRU4vhZyfPv/DgL1+82p77vVsanE3EEAYGVXlLFmnTs4zKDTynGE7no7e3cEWqkYjI0uvHw7cA9CSH1HAGpVOqtSnWCX8vbg4u9Ci8KZabCp8GVtYUXkJ5VAwhwAm2KhE61HIFkECAdYhBhONiaAe2BEtoNQiEAU4zHMw/3MoB4KHab1dYgHKl/IsgWM4FA+zRB/TsdBmFx5ySLhEvnqq8Gzgsqphap1PtGpvNn/nz6uPH7k9+l9g+akViOOQEXHmRcex0snYsR0Bu/HTkRbpTPxPynCqjr9SyEEhILHX1UYjtOCJAmQsEONPbz1Ki795EJOrubO4hijJVNySM9S75vc9uR/loJ/H0/AW1DIshjLfi7rx6glNLSqJcb9b55t/7DvGkGt4Rw6CzkxiotnDLG3zFeHAH+CzTYphQZWEdUD0Zs/qQU4FVyyQrTAhoYMByhxJxrokypkquSlJX1q4NhUlp46LMsgjNO/L6Ss/SguUZtVxBGBCpz6CWlMAoK0xUYeF/AAbQyr7CaYaxnFM4JoaDallAmRNliijX+ZyUbHiE+geI22q+xmJ9wQAAAABJRU5ErkJggg==",
+          "results_previous"
+        );
+        setIcons(
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAD8UlEQVRYha3XXYhVVRQH8J/TRVRCJMLCxDOEREgUkaE9aJ3EJD8qzayQvl6qEz1IYSY6hdSLlAiFHKUvQ6IPK4TEIKhjITFJiFhImEVnEAnxQUxkmER62Ps2Z67neh1nFhz22Wuvvf9rr7X22muPMYqUZuVEPIel6MZ5HMHH2F7kSX/rnDGjCD4Xn+LayBpAFxqx/xseLPLkcHVe1yiBz8bXEfwT3I7x8ZuD73AjijQrp1XnjtgCaVZ24RfMwEncUuTJ8RqZD/A4dhd5sqQ5NhoWuCeCw9XCLqdUBYo8OY8Mx7Ewzcrpo6nA/NiuRS9uaKPEWXweMe8aFQWiaa+P3UNYgB/bKYHfY9sM1BFb4GUsjP+Tizw5jXuxr40S18T29IgVSLNyJl7F2MhaCu2UiNZ6IMr2jkiBNCsnYEcFHBanWXlfVOIMFqm4AxtwEw5if3PSZR3DNCu34emaoX6swdYiTwZiZvwWM+P4AOYVebLvshVIs3IZvuggdkpIwYRdT8BZPFbkyZdVwSuGCd6N3UKGO4YXheRza4voOFwXv3+xE49Wd96kS7ZAmpVj8T1m4y/cWeRJX5qV8IfB4wjnsBWbcazIk4F26zbaDdTQxgh+AvOLPOmL/G5MrsidwWohDjouekkKpFm5Aqti97MiT45G/jQhyK6MYz9jZZEnRy5cpZ46uiDNyhn4qQLSh3mCn78yeO+/iZ6LmXvYCqRZeVUEn34RsRNCdH8zHOAmtXVBDLqdHcD3CtH9d2XeVCxDIuT+XdXxVqq1QIzsD4X7u46aJl9X5Mm5yrxVQrBWM2Q/1hR58tZwFNiEF9qAn8YTRZ7sapnzGta3AI+r9J8q8mR762Lt7oKzbfhHcUcVPM1KaVZurID/iduKPBmPWULCgo3RrZ0VKPKkB6+3sH/ArGpRGV21CS9F1mHMKfLkQFxnv5ATCLni5lasIUGYZmUDPfinyJOeCLBeqGRWVo9YHNtsMD/8Klw0J1owTlX+x7WMXWCBzXgFb6RZ2R0tsQQPXw54NPna2O0XqqYh1KgITxceFYTj1QdFnuxuWRTexvMdwBvCg2RuZL0bi5V6BYTqtmmRZ2IlO4RiVbMFz0bWoQh+sgb8IyEfEN4Fq9VQVYFJsT0nRHIreAPv4MnIOihcSnXgO7Aisvbh/rpnGUNjoHmBNCogzUWnCnm/yT+gfuddeA+PRFYvFsUSrZaqFtgjPBymYFualQuEOJiGxQYjeD8WFHlSje4mbTCYPXuj3AV+r9L/FogPh4eETNeF5UI2XB7Bz+P9uPM6cEIBSjB7R3BqUnEsu9YJQTlRKLn2YkuRJwcvtlialZNwN/a083kr/Qdf3GmRILYIwwAAAABJRU5ErkJggg==",
+          "announcer"
+        );
+      }
+    </script>
+  </head>
+  <body onload="onLoad()">
+    <img
+      id="idImgHeader"
+      alt="CrossMgr Logo"
+      onclick="location.reload(true)"
+      style="cursor: pointer;"
+      src="data:image/png;base64,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"
+    />
+    <h1>
+      Race Results<br /><span style="font-size: 80%"
+        >by Forest City Velodrome</span
+      >
+    </h1>
+    <ol>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Test%20Ride-r29-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Test Ride-r29</a
+        >
+        <span style="white-space: nowrap;">13:25 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Test%20Ride-r29-.html?raceCat=Amateur%20Women%20%28Women%29"
+          class="btn"
+          >Amateur Women (Women) <span>(<sup>1</sup>&frasl;<sub>1</sub>)</span>
+        </a>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Test%20Ride-r29-.html?raceCat=Amateur%20Men%20%28Men%29"
+          class="btn"
+          >Amateur Men (Men) <span>(<sup>3</sup>&frasl;<sub>3</sub>)</span>
+        </a>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Test%20Ride-r29-.html?raceCat=Youth%20C%20%28Open%29"
+          class="btn"
+          >Youth C (Open) <span>(<sup>4</sup>&frasl;<sub>4</sub>)</span>
+        </a>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Test%20Ride-r29-.html?raceCat=Youth%20B%20%28Open%29"
+          class="btn"
+          >Youth B (Open) <span>(<sup>3</sup>&frasl;<sub>3</sub>)</span>
+        </a>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Test%20Ride-r29-.html?raceCat=Youth%20A%20%28Open%29"
+          class="btn"
+          >Youth A (Open) <span>(<sup>6</sup>&frasl;<sub>6</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Group%201-r7-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Nifty 4 Fifty Group 1-r7</a
+        >
+        <span style="white-space: nowrap;">14:00 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Group%201-r7-.html?raceCat=Nifty%204%20Fifty%20Group%201%20%28Open%29"
+          class="btn"
+          >Nifty 4 Fifty Group 1 (Open)
+          <span>(<sup>6</sup>&frasl;<sub>6</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Group%202-r8-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Nifty 4 Fifty Group 2-r8</a
+        >
+        <span style="white-space: nowrap;">14:10 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Group%202-r8-.html?raceCat=Nifty%204%20Fifty%20Group%202%20%28Open%29"
+          class="btn"
+          >Nifty 4 Fifty Group 2 (Open)
+          <span>(<sup>10</sup>&frasl;<sub>10</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Group%203-r9-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Nifty 4 Fifty Group 3-r9</a
+        >
+        <span style="white-space: nowrap;">14:20 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Group%203-r9-.html?raceCat=Nifty%204%20Fifty%20Group%203%20%28Open%29"
+          class="btn"
+          >Nifty 4 Fifty Group 3 (Open)
+          <span>(<sup>10</sup>&frasl;<sub>10</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Group%204-r10-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Nifty 4 Fifty Group 4-r10</a
+        >
+        <span style="white-space: nowrap;">14:30 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Group%204-r10-.html?raceCat=Wave%20A%20%28Open%29"
+          class="btn"
+          >Wave A (Open) <span>(<sup>12</sup>&frasl;<sub>12</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Unknown%20Distance%201-r29-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Unknown Distance 1-r29</a
+        >
+        <span style="white-space: nowrap;">14:40 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Unknown%20Distance%201-r29-.html?raceCat=Amateur%20Women%20%28Women%29"
+          class="btn"
+          >Amateur Women (Women) <span>(<sup>3</sup>&frasl;<sub>3</sub>)</span>
+        </a>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Unknown%20Distance%201-r29-.html?raceCat=Amateur%20Men%20%28Men%29"
+          class="btn"
+          >Amateur Men (Men) <span>(<sup>3</sup>&frasl;<sub>3</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Unknown%20Distance%202-r29-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Unknown Distance 2-r29</a
+        >
+        <span style="white-space: nowrap;">14:45 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Unknown%20Distance%202-r29-.html?raceCat=Group%202%20%28Open%29"
+          class="btn"
+          >Group 2 (Open) <span>(<sup>7</sup>&frasl;<sub>7</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Unknown%20Distance%204-r5-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Unknown Distance 4-r5</a
+        >
+        <span style="white-space: nowrap;">14:55 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Unknown%20Distance%204-r5-.html?raceCat=Group%204%20%28Open%29"
+          class="btn"
+          >Group 4 (Open) <span>(<sup>6</sup>&frasl;<sub>6</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Win%20and%20Out%201-r12-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Win and Out 1-r12</a
+        >
+        <span style="white-space: nowrap;">15:00 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Win%20and%20Out%201-r12-.html?raceCat=Group%201%20%28Open%29"
+          class="btn"
+          >Group 1 (Open) <span>(<sup>6</sup>&frasl;<sub>6</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Semi-Final%201-r29-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Nifty 4 Fifty Semi-Final 1-r29</a
+        >
+        <span style="white-space: nowrap;">15:10 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Semi-Final%201-r29-.html?raceCat=Group%20B-C%20%28Open%29"
+          class="btn"
+          >Group B-C (Open) <span>(<sup>14</sup>&frasl;<sub>14</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Semi-Final%202-r29-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Nifty 4 Fifty Semi-Final 2-r29</a
+        >
+        <span style="white-space: nowrap;">15:15 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Semi-Final%202-r29-.html?raceCat=Group%20A-D%20%28Open%29"
+          class="btn"
+          >Group A-D (Open) <span>(<sup>6</sup>&frasl;<sub>11</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Miss%20and%20Out%201-r21-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Miss and Out 1-r21</a
+        >
+        <span style="white-space: nowrap;">15:25 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Miss%20and%20Out%201-r21-.html?raceCat=Group%201%20%28Open%29"
+          class="btn"
+          >Group 1 (Open) <span>(<sup>6</sup>&frasl;<sub>6</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Miss%20and%20Out%202-r22-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Miss and Out 2-r22</a
+        >
+        <span style="white-space: nowrap;">15:30 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Miss%20and%20Out%202-r22-.html?raceCat=Group%202%20%28Open%29"
+          class="btn"
+          >Group 2 (Open) <span>(<sup>6</sup>&frasl;<sub>6</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Scratch%20Race%202-r25-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Scratch Race 2-r25</a
+        >
+        <span style="white-space: nowrap;">15:40 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Scratch%20Race%202-r25-.html?raceCat=Group%202%20%28Open%29"
+          class="btn"
+          >Group 2 (Open) <span>(<sup>6</sup>&frasl;<sub>6</sub>)</span>
+        </a>
+      </li>
+      <li class="highlight">
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Youth%20C%20Scratch%20Race-r29-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Youth C Scratch Race-r29</a
+        >
+        <span style="white-space: nowrap;">15:40 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=True, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Youth%20C%20Scratch%20Race-r29-.html?raceCat=Youth%20C%20%28Open%29"
+          class="btn"
+          >Youth C (Open) <span>(<sup>7</sup>&frasl;<sub>7</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Youth%20D%20Scratch%20Race-r27-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Youth D Scratch Race-r27</a
+        >
+        <span style="white-space: nowrap;">15:55 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Youth%20D%20Scratch%20Race-r27-.html?raceCat=Youth%20D%20%28Open%29"
+          class="btn"
+          >Youth D (Open) <span>(<sup>5</sup>&frasl;<sub>5</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Junior%20Nifty%204%20Fifty%20Final-r28-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Junior Nifty 4 Fifty Final-r28</a
+        >
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Non-Qualifier%20Feature-r8-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Nifty 4 Fifty Non-Qualifier Feature-r8</a
+        >
+        <span style="white-space: nowrap;">17:30 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-Nifty%204%20Fifty%20Non-Qualifier%20Feature-r8-.html?raceCat=Nifty%204%20Fifty%20Non-Qualifiers%20%28Open%29"
+          class="btn"
+          >Nifty 4 Fifty Non-Qualifiers (Open)
+          <span>(<sup>9</sup>&frasl;<sub>11</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Feature%201-r9-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Feature 1-r9</a
+        >
+        <span style="white-space: nowrap;">18:00 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Feature%201-r9-.html?raceCat=Pro%20Men%20%28Men%29"
+          class="btn"
+          >Pro Men (Men) <span>(<sup>12</sup>&frasl;<sub>12</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Feature%202-r10-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Feature 2-r10</a
+        >
+        <span style="white-space: nowrap;">18:45 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Feature%202-r10-.html?raceCat=Pro%20Men%20%28Men%29"
+          class="btn"
+          >Pro Men (Men) <span>(<sup>12</sup>&frasl;<sub>12</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Final-r11-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Final-r11</a
+        >
+        <span style="white-space: nowrap;">19:30 Sat Feb 01, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-01-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Final-r11-.html?raceCat=Pro%20Men%20%28Men%29"
+          class="btn"
+          >Pro Men (Men) <span>(<sup>8</sup>&frasl;<sub>12</sub>)</span>
+        </a>
+    </li>
+    <li>
+            <a
+          href="2020-02-01-FCV Challenge 1001-FCV Challenge 1000-1 Feature Final Results.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Final All 1001 Laps</a
+        >
+        </li>
+
+      <li>
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-Test%20Ride-r30-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-Test Ride-r30</a
+        >
+        <span style="white-space: nowrap;">11:35 Sun Feb 02, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-Test%20Ride-r30-.html?raceCat=Pro%20Women%20%28Women%29"
+          class="btn"
+          >Pro Women (Women) <span>(<sup>11</sup>&frasl;<sub>11</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Women%20Feature%201-r1-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Women Feature 1-r1</a
+        >
+        <span style="white-space: nowrap;">12:00 Sun Feb 02, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Women%20Feature%201-r1-.html?raceCat=Pro%20Women%20%28Women%29"
+          class="btn"
+          >Pro Women (Women) <span>(<sup>11</sup>&frasl;<sub>11</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Women%20Feature%202-r2-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Women Feature 2-r2</a
+        >
+        <span style="white-space: nowrap;">13:00 Sun Feb 02, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Women%20Feature%202-r2-.html?raceCat=Pro%20Women%20%28Women%29"
+          class="btn"
+          >Pro Women (Women) <span>(<sup>11</sup>&frasl;<sub>11</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Women%20Feature%202b-r3-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Women Feature 2b-r3</a
+        >
+        <span style="white-space: nowrap;">13:30 Sun Feb 02, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Women%20Feature%202b-r3-.html?raceCat=Pro%20Women%20%28Women%29"
+          class="btn"
+          >Pro Women (Women) <span>(<sup>10</sup>&frasl;<sub>10</sub>)</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Women%20Feature%20Final-r20-.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Women Feature Final-r20</a
+        >
+        <span style="white-space: nowrap;">14:00 Sun Feb 02, 2020</span>
+        <script>
+          console.log("raceIsRunning=False, isTimeTrial=False, share=False");
+        </script>
+        <br />
+        <a
+          href="2020-02-02-FCV%20Challenge%201001-FCV%20Challenge%201000-1%20Women%20Feature%20Final-r20-.html?raceCat=Pro%20Women%20%28Women%29"
+          class="btn"
+          >Pro Women (Women) <span>(12)</span>
+        </a>
+    </li>
+    <li>
+        <a
+          href="2020-02-02-FCV Challenge 1001-FCV Challenge 1000-1 Women Final Results.html"
+          class="racename"
+          title="Results"
+          >FCV Challenge 1001-FCV Challenge 1000-1 Women Feature Final Results all 1001 laps</a
+        >
+
+    </li>
+    </ol>
+    <br />
+    Powered by
+    <a href="http://www.sites.google.com/site/crossmgrsoftware">CrossMgr</a>.
+    <p></p>
+    <p></p>
+  </body>
+</html>
